@@ -331,9 +331,11 @@ export default async function EventPage({ params }: Props) {
                             </li>
                         </ol>
                     </nav>
-                    {data.statusId !== EventStatuses.SoldOut && !isEmpty(data.beginDate) && (
-                        <KazticketButton locale={locale} eventCode={data.code} eventId={data.id} />
-                    )}
+                    {data.statusId !== EventStatuses.SoldOut &&
+                        data.statusId !== EventStatuses.SalesFrozen &&
+                        !isEmpty(data.beginDate) && (
+                            <KazticketButton locale={locale} eventCode={data.code} eventId={data.id} />
+                        )}
                 </div>
 
                 <div className="container mx-auto flex flex-col gap-4 my-8">
