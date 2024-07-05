@@ -121,7 +121,7 @@ const PageLayout: React.FC<PageLayoutProps> = async ({ children }) => {
 
     return (
         <div>
-            <div className="w-screen py-1 px-2 bg-[#F3F3F3] lg:block hidden">
+            {/* <div className="w-screen py-1 px-2 bg-[#F3F3F3] lg:block hidden">
                 <div className="flex gap-8 container mx-auto">
                     <Link className="text-gray-900 dark:text-white" href="tel:+7-708-08-08-999" target="_blank">
                         <span className="text-base leading-5 font-medium">+7-708-08-08-999</span>
@@ -134,9 +134,9 @@ const PageLayout: React.FC<PageLayoutProps> = async ({ children }) => {
                     </Link>
                     <Link className="text-[#2F2F3873] dark:text-white" href="#id" target="_blank">
                         <span className="text-sm leading-5">У кого я могу спросить?</span>
-                    </Link>
+                    </Link> 
                 </div>
-            </div>
+            </div> */}
             {/* Blue line under posters */}
             <svg
                 className="lg:block hidden absolute -z-10 right-0 -top-[21%] w-screen h-full rotate-12"

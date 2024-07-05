@@ -106,18 +106,18 @@ export default async function ContactsPage() {
                             </svg>
                         </div>
                         <h3 className="dark:text-white mb-3 text-xl font-bold font-heading leading-snug">
-                            {locale.Contacts.PurchaseAndReturnForAlau}
+                            {locale.Contacts.PurchaseAndReturnForOasis}
                         </h3>
                         <p className="dark:text-white font-medium text-gray-600">
-                            {locale.Contacts.ForQuestionsRegardingThePurchaseForAlau}
+                            {locale.Contacts.ForQuestionsRegardingThePurchaseForOasis}
                         </p>
-                        <p className="dark:text-white font-medium leading-relaxed">+7-771-247-67-48</p>
-                        <Link className="my-2" href="tel:+77712476748">
+                        <p className="dark:text-white font-medium leading-relaxed">+7-707-927-75-83</p>
+                        <Link className="my-2" href="tel:+77079277583">
                             <div className="text-white mt-2 rounded-md bg-sky-500 px-3 py-2 ">
                                 {locale.Contacts.Call}
                             </div>
                         </Link>
-                        <Link className="my-2" target="_blank" href="https://wa.me/77712476748">
+                        <Link className="my-2" target="_blank" href="https://wa.me/77079277583">
                             <div className="text-white mt-2 rounded-md bg-emerald-500 px-3 py-2 ">WhatsApp</div>
                         </Link>
                     </div>
