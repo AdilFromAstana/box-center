@@ -2,7 +2,6 @@ import { ChatBubbleLeftRightIcon, DocumentTextIcon, UsersIcon } from '@heroicons
 import { getCookie } from 'cookies-next';
 import { getDictionary } from 'dictionaries';
 import { cookies } from 'next/headers';
-import Link from 'next/link';
 import { ReactNode } from 'react';
 
 import { CheckToken } from '@/functions/AxiosHandlers';
