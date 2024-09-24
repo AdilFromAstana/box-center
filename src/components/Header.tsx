@@ -5,7 +5,6 @@ import {
     // Bars3Icon,
     // BuildingOffice2Icon,
     ChevronDownIcon,
-    MagnifyingGlassIcon,
     MapPinIcon,
     MoonIcon,
     // PhoneIcon,

@@ -1,6 +1,4 @@
 import dayjs from 'dayjs';
-import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
 
 import fb from '../assets/footer/fb.png';
@@ -8,12 +6,7 @@ import inst from '../assets/footer/inst.png';
 import vk from '../assets/footer/vk.png';
 import logo from '../assets/logo.png';
 
-interface FooterProps {
-    locale: any;
-    pages: any[];
-}
-
-const Footer = ({ pages, locale }: FooterProps) => {
+const Footer = () => {
     return (
         <footer id="footer" className="bg-[#001B15] shadow-footer mt-2 text-white py-20">
             <div className="mx-auto w-3/4 flex flex-col gap-6">
