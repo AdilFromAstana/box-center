@@ -26,41 +26,41 @@ const Footer = () => {
                         </div>
                     </div>
                     <div className="flex flex-col">
-                        <a className="w-fit" href="/">
+                        <a className="w-fit" href="#">
                             О центре бокса
                         </a>
-                        <a className="w-fit" href="/">
+                        <a className="w-fit" href="#">
                             Схема залов
                         </a>
-                        <a className="w-fit" href="/">
+                        <a className="w-fit" href="#">
                             Руководства
                         </a>
-                        <a className="w-fit" href="/">
+                        <a className="w-fit" href="#">
                             Правила посещения
                         </a>
                     </div>
                     <div className="flex flex-col">
-                        <a className="w-fit" href="/">
+                        <a className="w-fit" href="#">
                             Афиша
                         </a>
-                        <a className="w-fit" href="/">
+                        <a className="w-fit" href="#">
                             Как вернуть билет
                         </a>
-                        <a className="w-fit" href="/">
+                        <a className="w-fit" href="#">
                             Контакты
                         </a>
-                        <a className="w-fit" href="/">
+                        <a className="w-fit" href="#">
                             Галерея
                         </a>
                     </div>
                     <div className="flex flex-col">
-                        <a className="w-fit" href="/">
+                        <a className="w-fit" href="#">
                             Усулги
                         </a>
-                        <a className="w-fit" href="/">
+                        <a className="w-fit" href="#">
                             Гардероб
                         </a>
-                        <a className="w-fit" href="/">
+                        <a className="w-fit" href="#">
                             Кафе "Что-то там"
                         </a>
                     </div>
