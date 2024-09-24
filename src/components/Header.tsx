@@ -3,7 +3,7 @@
 import { getCookie, setCookie } from 'cookies-next';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import Logo from '@/assets/logo.png';
 import { isEmpty } from '@/functions';
@@ -21,7 +21,7 @@ interface HeaderProps {
     pages: any[];
 }
 
-const Header = ({ selectedCity, langs, selectedLang }: HeaderProps) => {
+const Header = ({ langs, selectedLang }: HeaderProps) => {
     const router = useRouter();
 
     useEffect(() => {
@@ -36,7 +36,6 @@ const Header = ({ selectedCity, langs, selectedLang }: HeaderProps) => {
     useEffect(() => {
         document.documentElement.classList.remove('dark');
     }, []);
-
 
     const handleSelectLang = (lang: Dropdown) => {
         if (selectedLang?.key !== lang.key) {
