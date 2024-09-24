@@ -1,28 +1,16 @@
 'use client';
 
-import { Dialog, Popover, Transition } from '@headlessui/react';
-import {
-    // Bars3Icon,
-    // BuildingOffice2Icon,
-    ChevronDownIcon,
-    MapPinIcon,
-    MoonIcon,
-    // PhoneIcon,
-    SunIcon,
-    XMarkIcon,
-} from '@heroicons/react/24/outline';
 import { getCookie, setCookie } from 'cookies-next';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Logo from '@/assets/logo.png';
 import { isEmpty } from '@/functions';
 import { City } from '@/types/City';
 import { Dropdown } from '@/types/Dropdown';
+
 // import PushNotificationRequest from './PushNotificationRequest';
-import SearchBox from './SearchBox';
 
 interface HeaderProps {
     cities: City[];
@@ -33,11 +21,7 @@ interface HeaderProps {
     pages: any[];
 }
 
-const Header = ({ locale, selectedCity, cities, langs, selectedLang, pages }: HeaderProps) => {
-    const [isSupportMenuOpen, setSupportMenuOpen] = useState<boolean>(false);
-    const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
-    const [isSearchMenuOpen, setSearchMenuOpen] = useState<boolean>(false);
-    const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+const Header = ({ selectedCity, langs, selectedLang }: HeaderProps) => {
     const router = useRouter();
 
     useEffect(() => {
@@ -50,26 +34,9 @@ const Header = ({ locale, selectedCity, cities, langs, selectedLang, pages }: He
     }, []);
 
     useEffect(() => {
-        if (
-            getCookie('theme') === 'dark' ||
-            (isEmpty(getCookie('theme')) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-        ) {
-            setIsDarkMode(true);
-            document.documentElement.classList.add('dark');
-        } else {
-            setIsDarkMode(false);
-            document.documentElement.classList.remove('dark');
-        }
-    }, [!isDarkMode]);
+        document.documentElement.classList.remove('dark');
+    }, []);
 
-    const handleSelectCity = (city: City) => {
-        if (selectedCity?.id !== city.id) {
-            setCookie('UserCityId', city.id, {
-                maxAge: 60 * 60 * 24 * 365,
-            });
-            location.reload();
-        }
-    };
 
     const handleSelectLang = (lang: Dropdown) => {
         if (selectedLang?.key !== lang.key) {
@@ -77,20 +44,6 @@ const Header = ({ locale, selectedCity, cities, langs, selectedLang, pages }: He
                 maxAge: 60 * 60 * 24 * 365,
             });
             location.reload();
-        }
-    };
-
-    const swithTheme = () => {
-        if (isDarkMode) {
-            setIsDarkMode(false);
-            setCookie('theme', 'light', {
-                maxAge: 60 * 60 * 24 * 365,
-            });
-        } else {
-            setCookie('theme', 'dark', {
-                maxAge: 60 * 60 * 24 * 365,
-            });
-            setIsDarkMode(true);
         }
     };
 
@@ -194,7 +147,7 @@ const Header = ({ locale, selectedCity, cities, langs, selectedLang, pages }: He
                     </div>
                 </div>
             </nav>
-            <Transition show={isMobileMenuOpen} appear as={Fragment}>
+            {/* <Transition show={isMobileMenuOpen} appear as={Fragment}>
                 <Dialog as="div" className="lg:hidden" onClose={() => setMobileMenuOpen(false)}>
                     <Transition.Child
                         as={Fragment}
@@ -536,7 +489,7 @@ const Header = ({ locale, selectedCity, cities, langs, selectedLang, pages }: He
                         </Dialog.Panel>
                     </Transition.Child>
                 </Dialog>
-            </Transition>
+            </Transition> */}
             {/* <PushNotificationRequest /> */}
         </header>
     );
