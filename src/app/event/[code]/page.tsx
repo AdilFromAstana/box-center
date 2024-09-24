@@ -61,7 +61,7 @@ async function GetLeisureCategories() {
     }
 }
 
-async function GetEventData(code: string) {
+async function GetEventData(code: unknown) {
     const { NEXT_PUBLIC_EVENTS_URL = '' } = process.env;
 
     const token = await CheckToken();
@@ -100,8 +100,10 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+    console.log('params: ', params);
     const code = params.code;
-    const data = await GetEventData(code);
+    const data: any = await GetEventData(code);
+    console.log('data: ', data);
     if (!data) {
         return {
             title: `Kazticket.kz`,
@@ -128,18 +130,19 @@ export const viewport: Viewport = {
 };
 
 export default async function EventPage({ params }: Props) {
-    const data: EventDto = await GetEventData(params.code);
-    const leisureCategories = await GetLeisureCategories();
+    const data: any = await GetEventData(params.code);
+    console.log('data: ', data);
+    // const leisureCategories = await GetLeisureCategories();
     const UserLang = getCookie('UserLang', { cookies });
     const locale = await getDictionary(UserLang?.toLocaleLowerCase() ?? 'ru');
-    const UserCategoryId = getCookie('UserCategoryId', { cookies });
-    const selectedCategory = leisureCategories.find((x: LeisureCategory) => {
-        if (UserCategoryId) {
-            return x.id === parseInt(UserCategoryId);
-        } else {
-            return x.id === 0;
-        }
-    }) ?? { id: 0, name: locale.EventListPage.All, code: 'all' };
+    // const UserCategoryId = getCookie('UserCategoryId', { cookies });
+    // const selectedCategory = leisureCategories.find((x: LeisureCategory) => {
+    //     if (UserCategoryId) {
+    //         return x.id === parseInt(UserCategoryId);
+    //     } else {
+    //         return x.id === 0;
+    //     }
+    // }) ?? { id: 0, name: locale.EventListPage.All, code: 'all' };
 
     if (!data) {
         return (
@@ -222,7 +225,7 @@ export default async function EventPage({ params }: Props) {
                         </noscript>
                     </>
                 )}
-                <LeisureCategories leisureCategories={leisureCategories} selectedCategory={selectedCategory} />
+                {/* <LeisureCategories leisureCategories={leisureCategories} selectedCategory={selectedCategory} /> */}
                 <div className="-mx-6 py-2">
                     <div className="w-full h-full relative transition duration-200">
                         <div className="bg-[#22182666] absolute w-full h-full top-0 left-0 z-20">
@@ -364,7 +367,7 @@ export default async function EventPage({ params }: Props) {
                         </div>
                     </div>
                     <div className="EventDescription my-6 w-full invert-0 dark:invert z-0">
-                        <div dangerouslySetInnerHTML={{ __html: data.description }}></div>
+                        {/* <div dangerouslySetInnerHTML={{ __html: data.description }}></div> */}
                     </div>
                 </div>
                 <div className="my-20">

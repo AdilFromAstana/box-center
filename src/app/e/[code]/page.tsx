@@ -4,26 +4,119 @@ import { cookies } from 'next/headers';
 import Link from 'next/link';
 import Script from 'next/script';
 
-import EventumButton from '@/components/EventumButton';
+import eventPoster1 from '../../../assets/events/1.png';
+import eventPoster2 from '../../../assets/events/2.png';
+import eventPoster3 from '../../../assets/events/3.png';
+import eventPoster4 from '../../../assets/events/4.png';
 
 import type { Metadata, Viewport } from 'next';
 
+const events = [
+    {
+        id: 1,
+        description: `
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">EMIN продолжает гастролировать по городам России и СНГ. В 2024 году певец и музыкант представляет обновленную программу с последними хитами, а также известные композиции.</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">«Отпусти и лети», «Благодарю, мама», «Я лучше всех живу», «Нежная», «МММ», Still, Boomerang, Good Love – эти и многие другие известные композиции, а также премьеры новых песен ждут зрителей. Вместе с насыщенной музыкальной программой полной романтических баллад и зажигательных хитов, зрителей   окутает самая дружественная атмосфера.</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">EMIN неоднократно становился лауреатом премии «Золотой Граммофон», также в коллекции у музыканта престижные награды: World Music Awards, премии телеканалов «МУЗ-ТВ» и RU.TV, журналов GQ, HELLO и многие другие.</span></p>
+        <p id="isPasted"><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">Только живой звук, искренние эмоции и неподдельная страсть — всё это ждет вас на концерте 12 октября в “Центр бокса им. Сапиева”</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">Начало концерта в 19.00.</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">6+</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">Стоимость билетов от 64 рублей до 255 рублей.</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">
+        Билеты можно приобрести в кассах “Центр бокса им. Сапиева”  – тел. +7 775 844 8448, факс 777 777 и на сайтах: www.kazticket.kz, www.ticketon.kz.
+        </span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">
+        Инфолиния – + 7 (7212) 50-77-22
+        </span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">
+            Живой звук!
+        </span></p>
+        `,
+        text: 'СЕРГЕЙ ЛАЗАРЕВ',
+        src: eventPoster4,
+        date: '6 октября | 19:00',
+        minAge: 16,
+    },
+    {
+        id: 2,
+        description: `
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">EMIN продолжает гастролировать по городам России и СНГ. В 2024 году певец и музыкант представляет обновленную программу с последними хитами, а также известные композиции.</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">«Отпусти и лети», «Благодарю, мама», «Я лучше всех живу», «Нежная», «МММ», Still, Boomerang, Good Love – эти и многие другие известные композиции, а также премьеры новых песен ждут зрителей. Вместе с насыщенной музыкальной программой полной романтических баллад и зажигательных хитов, зрителей   окутает самая дружественная атмосфера.</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">EMIN неоднократно становился лауреатом премии «Золотой Граммофон», также в коллекции у музыканта престижные награды: World Music Awards, премии телеканалов «МУЗ-ТВ» и RU.TV, журналов GQ, HELLO и многие другие.</span></p>
+        <p id="isPasted"><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">Только живой звук, искренние эмоции и неподдельная страсть — всё это ждет вас на концерте 12 октября в “Центр бокса им. Сапиева”</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">Начало концерта в 19.00.</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">6+</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">Стоимость билетов от 64 рублей до 255 рублей.</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">
+        Билеты можно приобрести в кассах “Центр бокса им. Сапиева”  – тел. +7 775 844 8448, факс 777 777 и на сайтах: www.kazticket.kz, www.ticketon.kz.
+        </span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">
+        Инфолиния – + 7 (7212) 50-77-22
+        </span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">
+            Живой звук!
+        </span></p>
+        `,
+        text: 'КОНЦЕРТ АЛЕКСАНДРА ПАНАЙОТОВА',
+        src: eventPoster3,
+        date: '12 октября | 19:00',
+        minAge: 6,
+    },
+    {
+        id: 3,
+        description: `
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">EMIN продолжает гастролировать по городам России и СНГ. В 2024 году певец и музыкант представляет обновленную программу с последними хитами, а также известные композиции.</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">«Отпусти и лети», «Благодарю, мама», «Я лучше всех живу», «Нежная», «МММ», Still, Boomerang, Good Love – эти и многие другие известные композиции, а также премьеры новых песен ждут зрителей. Вместе с насыщенной музыкальной программой полной романтических баллад и зажигательных хитов, зрителей   окутает самая дружественная атмосфера.</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">EMIN неоднократно становился лауреатом премии «Золотой Граммофон», также в коллекции у музыканта престижные награды: World Music Awards, премии телеканалов «МУЗ-ТВ» и RU.TV, журналов GQ, HELLO и многие другие.</span></p>
+        <p id="isPasted"><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">Только живой звук, искренние эмоции и неподдельная страсть — всё это ждет вас на концерте 12 октября в “Центр бокса им. Сапиева”</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">Начало концерта в 19.00.</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">6+</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">Стоимость билетов от 64 рублей до 255 рублей.</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">
+        Билеты можно приобрести в кассах “Центр бокса им. Сапиева”  – тел. +7 775 844 8448, факс 777 777 и на сайтах: www.kazticket.kz, www.ticketon.kz.
+        </span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">
+        Инфолиния – + 7 (7212) 50-77-22
+        </span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">
+            Живой звук!
+        </span></p>
+        `,
+        text: 'EMIN',
+        src: eventPoster2,
+        date: '17 ноября | 19:00',
+        minAge: 6,
+    },
+    {
+        id: 4,
+        description: `
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">EMIN продолжает гастролировать по городам России и СНГ. В 2024 году певец и музыкант представляет обновленную программу с последними хитами, а также известные композиции.</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">«Отпусти и лети», «Благодарю, мама», «Я лучше всех живу», «Нежная», «МММ», Still, Boomerang, Good Love – эти и многие другие известные композиции, а также премьеры новых песен ждут зрителей. Вместе с насыщенной музыкальной программой полной романтических баллад и зажигательных хитов, зрителей   окутает самая дружественная атмосфера.</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">EMIN неоднократно становился лауреатом премии «Золотой Граммофон», также в коллекции у музыканта престижные награды: World Music Awards, премии телеканалов «МУЗ-ТВ» и RU.TV, журналов GQ, HELLO и многие другие.</span></p>
+        <p id="isPasted"><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">Только живой звук, искренние эмоции и неподдельная страсть — всё это ждет вас на концерте 12 октября в “Центр бокса им. Сапиева”</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">Начало концерта в 19.00.</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">6+</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">Стоимость билетов от 64 рублей до 255 рублей.</span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">
+        Билеты можно приобрести в кассах “Центр бокса им. Сапиева”  – тел. +7 775 844 8448, факс 777 777 и на сайтах: www.kazticket.kz, www.ticketon.kz.
+        </span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">
+        Инфолиния – + 7 (7212) 50-77-22
+        </span></p>
+        <p><span style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">
+            Живой звук!
+        </span></p>
+        `,
+        text: 'КОНЦЕРТ БАЛЕТА АЛЛЫ ДУХОВОЙ TODES',
+        src: eventPoster1,
+        date: '21 ноября | 19:00',
+        minAge: 6,
+    },
+];
+
 async function GetEventData(code: string) {
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-    const res = await fetch(process.env.NEXT_PUBLIC_SERVICES_TEMP_URL + 'eventum/once/' + code, {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    });
-
-    if (!res.ok) {
-        // This will activate the closest `error.js` Error Boundary
-        console.log('res: ', res);
-        return null;
-    }
-
-    const data = await res.json();
-    return data.data;
+    const needEvent = events.find((i: any) => i.id == code);
+    return needEvent;
 }
 
 type Props = {
@@ -36,15 +129,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const data = await GetEventData(code);
     if (!data) {
         return {
-            title: `Kazticket.kz`,
+            title: `Boxcenter.kz`,
         };
     } else {
         return {
-            title: `${data.NameRu} - Купить билеты на Kazticket.kz`,
+            title: `${data.text} - Купить билеты на boxcenter.kz`,
             openGraph: {
-                images: data.Poster,
+                images: data.src.src,
             },
-            description: data.DescriptionRu?.replace(/<[^>]*>?/gm, ' ')
+            description: data.description
+                ?.replace(/<[^>]*>?/gm, ' ')
                 ?.replace(/&nbsp;/gi, ' ')
                 ?.replace(/\s+/g, ' '),
         };
@@ -80,52 +174,58 @@ export default async function EventPage({ params }: Props) {
         );
     } else {
         return (
-            <>
-                <div className="mt-2 lg:h-128 h-64 relative rounded-xl lg:rounded-3xl lg:p-10 p-2 flex flex-col justify-center -mx-2 items-center content-center">
-                    <div
-                        className="bg-cover bg-center absolute w-full h-full rounded-xl lg:rounded-3xl top-0 left-0 -z-20"
-                        style={{
-                            filter: 'blur(4px)',
-                            backgroundImage: `url("${data.Poster}")`,
-                        }}
-                    />
-                    <img
-                        alt="poster"
-                        title="poster"
-                        src={data.Poster}
-                        className="lg:h-full h-full lg:w-fit rounded-xl"
-                    />
-                    {/* <Image
-                        src={data.Poster}
-                        width={1000}
-                        height={1000}
-                        alt="Poster"
-                        className="lg:h-full lg:w-fit rounded-xl"
-                    /> */}
+            <div className='mb-20'>
+                <div className="container mx-auto">
+                    <h1 className="text-[#006D56]">{data.text}</h1>
                 </div>
-                <div className="-z-10 lg:text-6xl text-3xl text-black dark:text-white font-bold my-4">
-                    {UserLang?.toLocaleLowerCase() === 'en'
-                        ? data.NameEn
-                        : UserLang?.toLocaleLowerCase() === 'kk'
-                          ? data.NameKz
-                          : data.NameRu}
+                <div className="container mx-auto">
+                    <div className="EventDescription my-6 w-full invert-0 dark:invert z-0">
+                        <div
+                            dangerouslySetInnerHTML={{
+                                __html: data.description,
+                            }}
+                        ></div>
+                    </div>
                 </div>
-                <EventumButton data={data} locale={locale} />
-                <div className="my-6 w-full text-3xl text-black dark:text-white">{locale.EventPage.AboutDesc}</div>
-                <div className="EventDescription my-6 w-full invert-0 dark:invert z-0">
-                    <div
-                        dangerouslySetInnerHTML={{
-                            __html:
-                                UserLang?.toLocaleLowerCase() === 'en'
-                                    ? data.DescriptionEn
-                                    : UserLang?.toLocaleLowerCase() === 'kk'
-                                      ? data.DescriptionKz
-                                      : data.DescriptionRu,
-                        }}
-                    ></div>
+                <div className="container mx-auto">
+                    <div className="relative flex flex-col w-1/4 gap-4">
+                        <img alt={data.text} src={data.src.src} className="w-full h-[52.5vh] object-cover shadow-lg" />
+                        <div className="absolute top-0 right-0 w-8 h-8 bg-gray-600 flex items-center justify-center">
+                            {data.minAge}+
+                        </div>
+                        <div className="flex items-center flex-row gap-4">
+                            <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 25 25"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <rect x="0.5" y="0.219727" width="24" height="24" fill="url(#pattern0_29_290)" />
+                                <defs>
+                                    <pattern
+                                        id="pattern0_29_290"
+                                        patternContentUnits="objectBoundingBox"
+                                        width="1"
+                                        height="1"
+                                    >
+                                        <use xlinkHref="#image0_29_290" transform="scale(0.0416667)" />
+                                    </pattern>
+                                    <image
+                                        id="image0_29_290"
+                                        width="24"
+                                        height="24"
+                                        xlinkHref="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAIFSURBVHgBzVS/a1NRFP7OzRMxo0l0LE5C3XRxsSCK4NLB5r03FNGhiNi+gP9AB0cdlBhDkIIV6ZCkOnQRoi66i4sBJ8moSTqmlCbv9OS+l/SlL31pS1L6weWed+53z3fPDx5hCChjVcCYYkIR2dIyopCxnhHDBqHG2dKd/cdq6CXGBe6wrWTHCCifiwO45L3CfKSYru7FR1ou3aYYrQnhR5SAcG8Id164X4W73vO7xD+RLb81tArTE7fDD/uqMbrpm1XxF6IEhJvwzWaQK/5VEfcENPLlX/1Dx64ghlUmzgf9QzPImF+6wQhU4Xxpj+tYgVc4VmSQ46AXs5+BcqwCxgj2977AqFofFVK26wMCo2p9ZPg9MEYSn5rnqE3fGLwgX2nfuy5NXWGDb9GOWmHl6vEkV6U5V5wPxZhkkxUmjFCJaMleG0j5jLtwqksUbvKSeQnx7Ya2W2eTyJX/YnHuCpLNP6inktqfqjfQSFzGm4+/h/IDCPeAcB+t+DW9urZMkVLGY2xenIJSd/USW/vkLMSPSmecOLhEjn0P3K56LGMa5/9toJl6IK/bEM+0z6rKv2AWifp7yWZ2gP+6+CkYbuJj6gmfbInMZXDsu8fqzAjjhWqr5y7wSsoyo/254jscEmEBxgfEW72xq+FlectdnCvImNZkTD/jOJh8iQj/xy4iMbvbLtAk3o8mVbmqAAAAAElFTkSuQmCC"
+                                    />
+                                </defs>
+                            </svg>
+                            <span className="font-semibold">{data.date}</span>
+                        </div>
+                        <button className="bg-[#006D56] text-white w-full">Купить</button>
+                    </div>
                 </div>
                 <Script src={process.env.NEXT_PUBLIC_EVENTUM_WIDGET_URL} />
-            </>
+            </div>
         );
     }
 }

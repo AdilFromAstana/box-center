@@ -18,8 +18,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Fragment, useEffect, useState } from 'react';
 
-import WhiteMonoLogo from '@/assets/kazticket-logo-white-mono.svg';
-import Logo from '@/assets/kazticket-logo.svg';
+import Logo from '@/assets/logo.png';
 import { isEmpty } from '@/functions';
 import { City } from '@/types/City';
 import { Dropdown } from '@/types/Dropdown';
@@ -97,240 +96,78 @@ const Header = ({ locale, selectedCity, cities, langs, selectedLang, pages }: He
     };
 
     return (
-        <header className="container mx-auto lg:px-2 px-4 lg:py-0 py-2">
-            <nav
-                className="flex items-center justify-between rounded-2xl shadow-header-mobile lg:shadow-header dark:shadow-none py-3 lg:my-4 lg:px-8 px-4 lg:py-4"
-                aria-label="Global"
-            >
+        <header className="container mx-auto lg:py-0 py-2">
+            <nav className="flex items-center justify-between dark:shadow-none py-3 lg:my-4" aria-label="Global">
                 <div className="flex z-50">
                     <Image
                         onClick={() => {
                             router.push('/');
                         }}
-                        src={isDarkMode ? WhiteMonoLogo : Logo}
+                        src={Logo}
                         alt="Kazticket.kz Logo"
-                        className="lg:h-8 h-6 w-auto cursor-pointer"
+                        className="lg:h-20 h-10 w-auto cursor-pointer"
                         priority
                     />
                 </div>
-                <div className="hidden lg:flex lg:flex-1 lg:mx-5 mx-1">
-                    <SearchBox locale={locale} cities={cities} />
-                </div>
-                <div className="flex z-50">
-                    <div className="hidden lg:flex lg:gap-x-12 lg:items-center lg:justify-end">
-                        {/* <Link
-                            className="text-gray-900 dark:text-white flex gap-x-2 items-center"
-                            href="tel:+7-708-08-08-999"
-                            target="_blank"
-                        >
-                            <PhoneIcon className="h-7 w-7" />
-                            <div className="flex flex-col">
-                                <span className="text-base leading-5 font-semibold">+7-708-08-08-999</span>
-                                <span className="leading-5 text-gray-400 font-normal">{locale.Header.Support}</span>
-                            </div>
-                        </Link> */}
-                        <Popover className="relative">
-                            <Popover.Button className="flex items-center gap-x-1 text-base font-medium leading-6 text-gray-900 dark:text-white">
-                                <MapPinIcon className="h-5 w-5" />
-                                {isEmpty(selectedCity) ? locale?.Header?.City : selectedCity?.name}
-                                <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
-                            </Popover.Button>
-
-                            <Transition
-                                enter="transition ease-out duration-200"
-                                enterFrom="opacity-0 translate-y-1"
-                                enterTo="opacity-100 translate-y-0"
-                                leave="transition ease-in duration-150"
-                                leaveFrom="opacity-100 translate-y-0"
-                                leaveTo="opacity-0 translate-y-1"
-                            >
-                                <Popover.Panel className="absolute z-50 -right-8 top-full mt-3 w-screen max-w-xs max-h-96 overflow-auto rounded-2xl bg-white shadow-lg ring-1 ring-gray-900/5">
-                                    <div className="p-2">
-                                        {cities.map((city: City) => (
-                                            <div
-                                                key={city.id}
-                                                onClick={() => handleSelectCity(city)}
-                                                className={`group cursor-pointer relative flex items-center gap-x-6 rounded-lg p-3 text-sm leading-6 hover:bg-gray-50 ${
-                                                    city.id === selectedCity?.id ? 'bg-[#F5F5F5] text-[#0490C3]' : ''
-                                                }`}
-                                            >
-                                                <div className="flex-auto">
-                                                    <div className="block">
-                                                        {city.name}
-                                                        <span className="absolute z-50 inset-0" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </Popover.Panel>
-                            </Transition>
-                        </Popover>
-                        <Popover className="relative">
-                            <Popover.Button className="flex items-center gap-x-1 text-base font-medium leading-6 text-gray-900 dark:text-white">
-                                {/* <LanguageIcon className="h-5 w-5" />{' '} */}
-                                <svg
-                                    width="22"
-                                    height="22"
-                                    viewBox="0 0 22 22"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        d="M11 21C16.5228 21 21 16.5228 21 11C21 5.47715 16.5228 1 11 1M11 21C5.47715 21 1 16.5228 1 11C1 5.47715 5.47715 1 11 1M11 21C13.0083 21 14.6364 16.5228 14.6364 11C14.6364 5.47715 13.0083 1 11 1M11 21C8.99169 21 7.36364 16.5228 7.36364 11C7.36364 5.47715 8.99169 1 11 1M1.90909 7.36364H20.0909M1.90909 13.7273H20.0909"
-                                        stroke="#2F2F38"
-                                        strokeWidth="1.5"
-                                        strokeLinecap="round"
-                                    />
-                                </svg>
-                                {isEmpty(selectedLang) ? 'Язык' : selectedLang?.text}
-                                <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
-                            </Popover.Button>
-
-                            <Transition
-                                enter="transition ease-out duration-200"
-                                enterFrom="opacity-0 translate-y-1"
-                                enterTo="opacity-100 translate-y-0"
-                                leave="transition ease-in duration-150"
-                                leaveFrom="opacity-100 translate-y-0"
-                                leaveTo="opacity-0 translate-y-1"
-                            >
-                                <Popover.Panel className="absolute z-50 -right-8 top-full mt-3 w-screen max-w-xs max-h-96 overflow-auto rounded-2xl bg-white shadow-lg ring-1 ring-gray-900/5">
-                                    <div className="p-2">
-                                        {langs.map((lang: Dropdown) => (
-                                            <div
-                                                key={lang.key}
-                                                onClick={() => handleSelectLang(lang)}
-                                                className={`group cursor-pointer relative flex items-center gap-x-6 rounded-lg p-3 text-sm leading-6 hover:bg-gray-50 ${
-                                                    lang.key === selectedLang?.key ? 'bg-[#F5F5F5] text-[#0490C3]' : ''
-                                                }`}
-                                            >
-                                                <div className="flex-auto">
-                                                    <div className="block">
-                                                        {lang.text}
-                                                        <span className="absolute z-50 inset-0" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </Popover.Panel>
-                            </Transition>
-                        </Popover>
-                        <label className="relative cursor-pointer p-2">
-                            <svg
-                                onClick={() => swithTheme()}
-                                className="dark:hidden"
-                                width="16"
-                                height="16"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    className="fill-slate-300"
-                                    d="M7 0h2v2H7zM12.88 1.637l1.414 1.415-1.415 1.413-1.413-1.414zM14 7h2v2h-2zM12.95 14.433l-1.414-1.413 1.413-1.415 1.415 1.414zM7 14h2v2H7zM2.98 14.364l-1.413-1.415 1.414-1.414 1.414 1.415zM0 7h2v2H0zM3.05 1.706 4.463 3.12 3.05 4.535 1.636 3.12z"
-                                />
-                                <path
-                                    className="fill-slate-400"
-                                    d="M8 4C5.8 4 4 5.8 4 8s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4Z"
-                                />
-                            </svg>
-                            <svg
-                                onClick={() => swithTheme()}
-                                className="hidden dark:block"
-                                width="16"
-                                height="16"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    className="fill-slate-400"
-                                    d="M6.2 1C3.2 1.8 1 4.6 1 7.9 1 11.8 4.2 15 8.1 15c3.3 0 6-2.2 6.9-5.2C9.7 11.2 4.8 6.3 6.2 1Z"
-                                />
-                                <path
-                                    className="fill-slate-500"
-                                    d="M12.5 5a.625.625 0 0 1-.625-.625 1.252 1.252 0 0 0-1.25-1.25.625.625 0 1 1 0-1.25 1.252 1.252 0 0 0 1.25-1.25.625.625 0 1 1 1.25 0c.001.69.56 1.249 1.25 1.25a.625.625 0 1 1 0 1.25c-.69.001-1.249.56-1.25 1.25A.625.625 0 0 1 12.5 5Z"
-                                />
-                            </svg>
-                        </label>
+                <div className="flex flex-col pb-6 border-b-2 mr-10 gap-4">
+                    <div className="flex justify-between">
+                        <div className="flex z-50 gap-10">
+                            <a href="tel:+7-708-08-08-999" className="uppercase font-thin flex flex-row gap-2">
+                                <span>кассы</span>
+                                <span>+7-708-08-08-999</span>
+                            </a>
+                            <a href="tel:+7-708-08-08-999" className="uppercase font-thin flex flex-row gap-2">
+                                <span>астана</span>
+                                <span>+7-708-08-08-999</span>
+                            </a>
+                            <a href="tel:+7-708-08-08-999" className="uppercase font-thin flex flex-row gap-2">
+                                ОБРАТНАЯ СВЯЗЬ
+                            </a>
+                        </div>
+                        <div className="flex gap-2">
+                            {langs.map((lang, i) => {
+                                return (
+                                    <>
+                                        {i !== 0 && '|'}{' '}
+                                        <button
+                                            key={lang.key}
+                                            onClick={() => handleSelectLang(lang)}
+                                            className={`${
+                                                selectedLang?.key === lang.key && 'text-[#006D56]'
+                                            } uppercase`}
+                                        >
+                                            {lang.text}
+                                        </button>
+                                    </>
+                                );
+                            })}
+                        </div>
                     </div>
-                    {/* Для мобилки */}
-                    <div className="flex gap-3 lg:hidden z-50">
-                        <div className="flex flex-row justify-center ml-2">
-                            <button
-                                type="button"
-                                className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-                                onClick={() => {
-                                    window.scrollTo({ top: 0 });
-                                    setSearchMenuOpen(true);
-                                }}
-                            >
-                                <span className="sr-only">Open search</span>
-                                <MagnifyingGlassIcon
-                                    className="h-6 w-6 text-[#2F2F38] dark:text-white"
-                                    aria-hidden="true"
-                                />
-                            </button>
-                        </div>
-                        <button
-                            type="button"
-                            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-                            onClick={() => {
-                                window.scrollTo({ top: 0 });
-                                setMobileMenuOpen(true);
-                            }}
-                        >
-                            <span className="sr-only">Open main menu</span>
-                            <svg
-                                className="h-4 w-6 text-[#2F2F38] dark:text-white"
-                                width="16"
-                                height="16"
-                                viewBox="0 0 16 16"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <g clipPath="url(#clip0_721_30841)">
-                                    <path
-                                        d="M0 1H16M0 8H8M0 15H16"
-                                        stroke="currentColor"
-                                        strokeOpacity="0.85"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                    />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_721_30841">
-                                        <rect width="16" height="16" fill="white" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-
-                            {/* <Bars3Icon className="h-6 w-6" aria-hidden="true" /> */}
-                        </button>
-                        <div className="flex flex-row justify-center ml-2">
-                            <button
-                                type="button"
-                                className="-m-2.5 inline-flex items-center justify-center rounded-md pr-2.5 text-[#2F2F38] dark:text-white"
-                                onClick={() => {
-                                    window.scrollTo({ top: 0 });
-                                    setSupportMenuOpen(true);
-                                }}
-                            >
-                                <span className="sr-only">Open support menu</span>
-                                <svg
-                                    className="w-6 h-4"
-                                    width="16"
-                                    height="16"
-                                    viewBox="0 0 16 16"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        d="M14.8544 6.72431C14.7943 6.69619 14.7556 6.63763 14.7541 6.57279C14.7541 2.94274 11.7296 0 7.99858 0C4.26759 0 1.24302 2.94274 1.24302 6.57279C1.24192 6.63788 1.20349 6.69691 1.14347 6.72569C0.465372 7.02014 0.0208316 7.66676 0 8.38895V10.4646C0.0702312 11.5767 1.04872 12.4259 2.19236 12.3672H3.85209C4.14664 12.3672 4.38542 12.1349 4.38542 11.8483V7.00521C4.38542 6.71862 4.14664 6.4863 3.85209 6.4863H2.86293C2.81359 6.48668 2.76636 6.46684 2.7328 6.43165C2.69949 6.39634 2.6823 6.34942 2.68516 6.30157C2.87387 3.58082 5.19724 1.46773 8 1.46773C10.8028 1.46773 13.1261 3.58082 13.3148 6.30157C13.3177 6.34942 13.3005 6.39634 13.2672 6.43165C13.2334 6.46656 13.1863 6.48634 13.1371 6.4863H12.1479C11.8534 6.4863 11.6146 6.71862 11.6146 7.00521V11.8483C11.6146 12.1349 11.8534 12.3672 12.1479 12.3672H12.8C12.8982 12.3672 12.9778 12.4447 12.9778 12.5402C12.9778 13.3044 12.341 13.9239 11.5556 13.9239H10.3893C10.3301 13.9239 10.2748 13.8954 10.2414 13.8478C9.89353 13.3408 9.24561 13.1151 8.646 13.2919C8.04639 13.4688 7.63636 14.0065 7.63636 14.6161C7.63636 15.2258 8.04639 15.7635 8.646 15.9404C9.24561 16.1172 9.89353 15.8915 10.2414 15.3845C10.2747 15.3367 10.33 15.308 10.3893 15.3077H11.5556C13.1265 15.3077 14.4 14.0686 14.4 12.5402V12.4191C14.3999 12.3433 14.4507 12.2762 14.5252 12.2537C15.3675 12.0376 15.966 11.3115 16 10.4646V8.38895C15.9788 7.66593 15.5334 7.01876 14.8544 6.72431Z"
-                                        fill="currentColor"
-                                        fillOpacity="0.85"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
+                    <div className="flex gap-8">
+                        <a href="" className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]">
+                            О Дворце
+                        </a>
+                        <a href="" className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]">
+                            Афиша
+                        </a>
+                        <a href="" className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]">
+                            Услуги
+                        </a>
+                        <a href="" className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]">
+                            Билеты
+                        </a>
+                        <a href="" className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]">
+                            Президентский оркестр
+                        </a>
+                        <a href="" className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]">
+                            Галерея
+                        </a>
+                        <a href="" className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]">
+                            Новости
+                        </a>
+                        <a href="" className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]">
+                            Контакты
+                        </a>
                     </div>
                 </div>
             </nav>
@@ -466,7 +303,7 @@ const Header = ({ locale, selectedCity, cities, langs, selectedLang, pages }: He
                                 </div>
                                 <div className="flex gap-5">
                                     <Link
-                                        className="text-black hover:text-gray-500 dark:text-white"
+                                        className="text-black hover:text-[#006D56] dark:text-white"
                                         href="https://t.me/kazticketkz"
                                         target="_blank"
                                     >
@@ -495,7 +332,7 @@ const Header = ({ locale, selectedCity, cities, langs, selectedLang, pages }: He
                                         </svg>
                                     </Link>
                                     <Link
-                                        className="text-black hover:text-gray-500 dark:text-white"
+                                        className="text-black hover:text-[#006D56] dark:text-white"
                                         href="https://www.instagram.com/kazticket.kz"
                                         target="_blank"
                                     >
@@ -514,7 +351,7 @@ const Header = ({ locale, selectedCity, cities, langs, selectedLang, pages }: He
                                         </svg>
                                     </Link>
                                     <Link
-                                        className="text-black hover:text-gray-500 dark:text-white"
+                                        className="text-black hover:text-[#006D56] dark:text-white"
                                         href="https://www.tiktok.com/@kazticket.kz"
                                         target="_blank"
                                     >
@@ -533,7 +370,7 @@ const Header = ({ locale, selectedCity, cities, langs, selectedLang, pages }: He
                                         </svg>
                                     </Link>
                                     <Link
-                                        className="text-black hover:text-gray-500 dark:text-white"
+                                        className="text-black hover:text-[#006D56] dark:text-white"
                                         href="https://www.linkedin.com/company/kazticket-kz"
                                         target="_blank"
                                     >
@@ -548,7 +385,7 @@ const Header = ({ locale, selectedCity, cities, langs, selectedLang, pages }: He
                                         </svg>
                                     </Link>
                                     <Link
-                                        className="text-black hover:text-gray-500 dark:text-white"
+                                        className="text-black hover:text-[#006D56] dark:text-white"
                                         href="https://vk.com/kazticketkzz"
                                         target="_blank"
                                     >
