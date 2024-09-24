@@ -174,7 +174,7 @@ export default async function EventPage({ params }: Props) {
         );
     } else {
         return (
-            <div className='mb-20'>
+            <div className="mb-20">
                 <div className="container mx-auto">
                     <h1 className="text-[#006D56]">{data.text}</h1>
                 </div>

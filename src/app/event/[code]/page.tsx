@@ -11,55 +11,15 @@ import { Event, WithContext } from 'schema-dts';
 import EmptyPoster from '@/assets/empty-poster.svg';
 // import SoldOut from '@/assets/soldout.svg';
 import KazticketButton from '@/components/KazticketButton';
-import LeisureCategories from '@/components/LeisureCategories';
 import SubscribeForm from '@/components/SubscribeForm';
 import EventStatuses from '@/constants/EventStatuses.json';
 import { isEmpty } from '@/functions';
 // import { isEmpty } from '@/functions';
 import { CheckToken } from '@/functions/AxiosHandlers';
-import { Event as EventDto } from '@/types/Event';
-import { LeisureCategory } from '@/types/LeisureCategory';
 
 import type { Metadata, Viewport } from 'next';
 
 dayjs.extend(utc);
-
-async function GetLeisureCategories() {
-    try {
-        const UserLang = getCookie('UserLang', { cookies });
-        const locale = await getDictionary(UserLang?.toLocaleLowerCase() ?? 'ru');
-        let acceptLanguage = 'ru-RU';
-        switch (UserLang?.toLocaleLowerCase()) {
-            case 'kk':
-                acceptLanguage = 'kz-KZ';
-                break;
-            case 'en':
-                acceptLanguage = 'en-US';
-                break;
-        }
-
-        const token = await CheckToken();
-        const res = await fetch(process.env.NEXT_PUBLIC_MANAGEMENT_URL + 'commercial/leisureCategories', {
-            headers: {
-                'Accept-Language': acceptLanguage,
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
-        });
-
-        if (!res.ok) {
-            throw new Error(`Failed to fetch data. Status: ${res.status}`);
-        }
-
-        const leisureCategories: LeisureCategory[] = await res.json();
-        const defaultCategory: LeisureCategory = { id: 0, name: locale.EventListPage.All, code: 'all' };
-
-        return [defaultCategory, ...leisureCategories];
-    } catch (error) {
-        const leisureCategories: LeisureCategory[] = [];
-        return leisureCategories;
-    }
-}
 
 async function GetEventData(code: unknown) {
     const { NEXT_PUBLIC_EVENTS_URL = '' } = process.env;
