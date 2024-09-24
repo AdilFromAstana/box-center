@@ -145,7 +145,7 @@ const PageLayout: React.FC<PageLayoutProps> = async ({ children }) => {
                 selectedLang={selectedLang}
             />
             <div className="px-4">{children}</div>
-            <Footer locale={locale} pages={pages} />
+            <Footer />
             {/* <TabBar locale={locale} pages={pages} /> */}
         </div>
     );
