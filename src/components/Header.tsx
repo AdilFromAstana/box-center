@@ -143,28 +143,52 @@ const Header = ({ locale, selectedCity, cities, langs, selectedLang, pages }: He
                         </div>
                     </div>
                     <div className="flex gap-8">
-                        <a href="" className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]">
+                        <a
+                            href="https://www.vk.com"
+                            className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
+                        >
                             О Дворце
                         </a>
-                        <a href="" className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]">
+                        <a
+                            href="https://www.vk.com"
+                            className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
+                        >
                             Афиша
                         </a>
-                        <a href="" className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]">
+                        <a
+                            href="https://www.vk.com"
+                            className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
+                        >
                             Услуги
                         </a>
-                        <a href="" className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]">
+                        <a
+                            href="https://www.vk.com"
+                            className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
+                        >
                             Билеты
                         </a>
-                        <a href="" className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]">
+                        <a
+                            href="https://www.vk.com"
+                            className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
+                        >
                             Президентский оркестр
                         </a>
-                        <a href="" className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]">
+                        <a
+                            href="https://www.vk.com"
+                            className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
+                        >
                             Галерея
                         </a>
-                        <a href="" className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]">
+                        <a
+                            href="https://www.vk.com"
+                            className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
+                        >
                             Новости
                         </a>
-                        <a href="" className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]">
+                        <a
+                            href="https://www.vk.com"
+                            className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
+                        >
                             Контакты
                         </a>
                     </div>
