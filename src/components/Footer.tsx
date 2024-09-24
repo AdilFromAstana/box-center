@@ -26,41 +26,41 @@ const Footer = () => {
                         </div>
                     </div>
                     <div className="flex flex-col">
-                        <a className="w-fit" href="#">
+                        <a className="w-fit" href="https://www.instagram.com/">
                             О центре бокса
                         </a>
-                        <a className="w-fit" href="#">
+                        <a className="w-fit" href="https://www.instagram.com/">
                             Схема залов
                         </a>
-                        <a className="w-fit" href="#">
+                        <a className="w-fit" href="https://www.instagram.com/">
                             Руководства
                         </a>
-                        <a className="w-fit" href="#">
+                        <a className="w-fit" href="https://www.instagram.com/">
                             Правила посещения
                         </a>
                     </div>
                     <div className="flex flex-col">
-                        <a className="w-fit" href="#">
+                        <a className="w-fit" href="https://www.instagram.com/">
                             Афиша
                         </a>
-                        <a className="w-fit" href="#">
+                        <a className="w-fit" href="https://www.instagram.com/">
                             Как вернуть билет
                         </a>
-                        <a className="w-fit" href="#">
+                        <a className="w-fit" href="https://www.instagram.com/">
                             Контакты
                         </a>
-                        <a className="w-fit" href="#">
+                        <a className="w-fit" href="https://www.instagram.com/">
                             Галерея
                         </a>
                     </div>
                     <div className="flex flex-col">
-                        <a className="w-fit" href="#">
+                        <a className="w-fit" href="https://www.instagram.com/">
                             Усулги
                         </a>
-                        <a className="w-fit" href="#">
+                        <a className="w-fit" href="https://www.instagram.com/">
                             Гардероб
                         </a>
-                        <a className="w-fit" href="#">
+                        <a className="w-fit" href="https://www.instagram.com/">
                             Кафе "Что-то там"
                         </a>
                     </div>
