@@ -17,40 +17,59 @@ const photoReportImages = [
     { text: 'Ещё пример', src: reportPhoto3 },
 ];
 
-const PhotoGallery = () => {
+const SiteGallery = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [selectedImage, setSelectedImage] = useState<string | null>(null); // Для хранения выбранного изображения
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
+    const [itemsPerPage, setItemsPerPage] = useState(1);
     const sliderRef = useRef<HTMLDivElement>(null);
 
     const totalItems = photoReportImages.length;
-    const itemsPerPage = 4;
 
     const handlePrev = () => {
-        setCurrentIndex((prevIndex) => (prevIndex === 0 ? totalItems - itemsPerPage : prevIndex - 1));
+        setCurrentIndex((prevIndex) => (prevIndex === 0 ? totalItems - 1 : prevIndex - 1));
     };
 
     const handleNext = () => {
-        setCurrentIndex((prevIndex) => (prevIndex === totalItems - itemsPerPage ? 0 : prevIndex + 1));
+        setCurrentIndex((prevIndex) => (prevIndex === totalItems - 1 ? 0 : prevIndex + 1));
     };
 
     useEffect(() => {
         if (sliderRef.current) {
-            sliderRef.current.style.transform = `translateX(-${(currentIndex / itemsPerPage) * 100}%)`;
+            const itemWidth = sliderRef.current.clientWidth / itemsPerPage;
+            const shift = currentIndex * itemWidth;
+            sliderRef.current.style.transform = `translateX(-${shift}px)`;
         }
-    }, [currentIndex]);
+    }, [currentIndex, itemsPerPage]);
 
-    // Функция для открытия модального окна
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth <= 480) {
+                setItemsPerPage(1);
+            } else if (window.innerWidth <= 1024) {
+                setItemsPerPage(2);
+            } else if (window.innerWidth <= 1280) {
+                setItemsPerPage(3);
+            } else {
+                setItemsPerPage(4);
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Для начальной установки значения
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     const handleImageClick = (imageSrc: string) => {
         setSelectedImage(imageSrc);
     };
 
-    // Функция для закрытия модального окна
     const handleCloseModal = () => {
         setSelectedImage(null);
     };
 
     return (
-        <div className="bg-[#001B15] py-6 -mx-4">
+        <div className="lg:py-6 py-2 -mx-4 bg-[#001B15] px-4">
             <div className="my-20 relative container z-40 mx-auto">
                 <div className="flex items-center mb-4">
                     <div className="w-16 h-1 bg-[#006D56] mr-2"></div>
@@ -87,17 +106,16 @@ const PhotoGallery = () => {
                 <div className="relative overflow-hidden w-full">
                     <div ref={sliderRef} className="flex transition-transform duration-500 ease-in-out">
                         {photoReportImages.map((photoReportImage, index) => (
-                            <div
-                                key={index}
-                                className="flex-shrink-0 w-[calc(25%_-_16px)] flex flex-col items-center gap-2 mx-2"
-                            >
-                                <img
-                                    alt={photoReportImage.text}
-                                    src={photoReportImage.src.src}
-                                    className="w-full h-[25vh] object-cover rounded-lg shadow-lg cursor-pointer"
-                                    onClick={() => handleImageClick(photoReportImage.src.src)} // Открытие модального окна при клике
-                                />
-                                <div className="text-center text-[#006D56]">{photoReportImage.text}</div>
+                            <div key={index} className="flex-shrink-0 px-2" style={{ width: `${100 / itemsPerPage}%` }}>
+                                <div className="relative w-full" style={{ paddingBottom: '65.25%' }}>
+                                    <img
+                                        alt={photoReportImage.text}
+                                        src={photoReportImage.src.src}
+                                        className="absolute top-0 left-0 w-full h-full object-cover rounded-lg shadow-lg cursor-pointer"
+                                        onClick={() => handleImageClick(photoReportImage.src.src)}
+                                    />
+                                </div>
+                                <div className="text-center text-[#006D56] mt-2">{photoReportImage.text}</div>
                             </div>
                         ))}
                     </div>
@@ -129,4 +147,4 @@ const PhotoGallery = () => {
     );
 };
 
-export default PhotoGallery;
+export default SiteGallery;

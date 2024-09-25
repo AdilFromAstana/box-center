@@ -1,16 +1,30 @@
 'use client';
 
+import { Dialog, Popover, Transition } from '@headlessui/react';
+import {
+    // Bars3Icon,
+    // BuildingOffice2Icon,
+    ChevronDownIcon,
+    MagnifyingGlassIcon,
+    MapPinIcon,
+    MoonIcon,
+    // PhoneIcon,
+    SunIcon,
+    XMarkIcon,
+} from '@heroicons/react/24/outline';
 import { getCookie, setCookie } from 'cookies-next';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
-import Logo from '@/assets/logo.png';
+import WhiteMonoLogo from '@/assets/kazticket-logo-white-mono.svg';
+import Logo from '@/assets/kazticket-logo.svg';
 import { isEmpty } from '@/functions';
 import { City } from '@/types/City';
 import { Dropdown } from '@/types/Dropdown';
-
 // import PushNotificationRequest from './PushNotificationRequest';
+import SearchBox from './SearchBox';
 
 interface HeaderProps {
     cities: City[];
@@ -21,7 +35,11 @@ interface HeaderProps {
     pages: any[];
 }
 
-const Header = ({ langs, selectedLang }: HeaderProps) => {
+const Header = ({ locale, selectedCity, cities, langs, selectedLang, pages }: HeaderProps) => {
+    const [isSupportMenuOpen, setSupportMenuOpen] = useState<boolean>(false);
+    const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
+    const [isSearchMenuOpen, setSearchMenuOpen] = useState<boolean>(false);
+    const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -34,8 +52,26 @@ const Header = ({ langs, selectedLang }: HeaderProps) => {
     }, []);
 
     useEffect(() => {
-        document.documentElement.classList.remove('dark');
-    }, []);
+        if (
+            getCookie('theme') === 'dark' ||
+            (isEmpty(getCookie('theme')) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        ) {
+            setIsDarkMode(true);
+            document.documentElement.classList.add('dark');
+        } else {
+            setIsDarkMode(false);
+            document.documentElement.classList.remove('dark');
+        }
+    }, [!isDarkMode]);
+
+    const handleSelectCity = (city: City) => {
+        if (selectedCity?.id !== city.id) {
+            setCookie('UserCityId', city.id, {
+                maxAge: 60 * 60 * 24 * 365,
+            });
+            location.reload();
+        }
+    };
 
     const handleSelectLang = (lang: Dropdown) => {
         if (selectedLang?.key !== lang.key) {
@@ -47,106 +83,165 @@ const Header = ({ langs, selectedLang }: HeaderProps) => {
     };
 
     return (
-        <header className="container mx-auto lg:py-0 py-2">
-            <nav className="flex items-center justify-between dark:shadow-none py-3 lg:my-4" aria-label="Global">
+        <header className="container mx-auto lg:px-2 px-4 lg:py-0 py-2">
+            <nav
+                className="flex items-center justify-between rounded-2xl shadow-header-mobile lg:shadow-header dark:shadow-none py-3 lg:my-4 lg:px-8 px-4 lg:py-4"
+                aria-label="Global"
+            >
                 <div className="flex z-50">
                     <Image
                         onClick={() => {
                             router.push('/');
                         }}
-                        src={Logo}
+                        src={isDarkMode ? WhiteMonoLogo : Logo}
                         alt="Kazticket.kz Logo"
-                        className="lg:h-20 h-10 w-auto cursor-pointer"
+                        className="lg:h-8 h-6 w-auto cursor-pointer"
                         priority
                     />
                 </div>
-                <div className="flex flex-col pb-6 border-b-2 mr-10 gap-4">
-                    <div className="flex justify-between">
-                        <div className="flex z-50 gap-10">
-                            <a href="tel:+7-708-08-08-999" className="uppercase font-thin flex flex-row gap-2">
-                                <span>кассы</span>
-                                <span>+7-708-08-08-999</span>
-                            </a>
-                            <a href="tel:+7-708-08-08-999" className="uppercase font-thin flex flex-row gap-2">
-                                <span>астана</span>
-                                <span>+7-708-08-08-999</span>
-                            </a>
-                            <a href="tel:+7-708-08-08-999" className="uppercase font-thin flex flex-row gap-2">
-                                ОБРАТНАЯ СВЯЗЬ
-                            </a>
+                <div className="flex z-50">
+                    <div className="hidden lg:flex flex-col pb-6 border-b-2 mr-10 gap-4">
+                        <div className="flex justify-between">
+                            <div className="flex z-50 gap-10">
+                                <a href="tel:+7-708-08-08-999" className="uppercase font-thin flex flex-row gap-2">
+                                    <span>кассы</span>
+                                    <span>+7-708-08-08-999</span>
+                                </a>
+                                <a href="tel:+7-708-08-08-999" className="uppercase font-thin flex flex-row gap-2">
+                                    <span>астана</span>
+                                    <span>+7-708-08-08-999</span>
+                                </a>
+                                <a href="tel:+7-708-08-08-999" className="uppercase font-thin flex flex-row gap-2">
+                                    ОБРАТНАЯ СВЯЗЬ
+                                </a>
+                            </div>
+                            <div className="flex gap-2">
+                                {langs.map((lang, i) => {
+                                    return (
+                                        <>
+                                            {i !== 0 && '|'}{' '}
+                                            <button
+                                                key={lang.key}
+                                                onClick={() => handleSelectLang(lang)}
+                                                className={`${
+                                                    selectedLang?.key === lang.key && 'text-[#006D56]'
+                                                } uppercase`}
+                                            >
+                                                {lang.text}
+                                            </button>
+                                        </>
+                                    );
+                                })}
+                            </div>
                         </div>
-                        <div className="flex gap-2">
-                            {langs.map((lang, i) => {
-                                return (
-                                    <>
-                                        {i !== 0 && '|'}{' '}
-                                        <button
-                                            key={lang.key}
-                                            onClick={() => handleSelectLang(lang)}
-                                            className={`${
-                                                selectedLang?.key === lang.key && 'text-[#006D56]'
-                                            } uppercase`}
-                                        >
-                                            {lang.text}
-                                        </button>
-                                    </>
-                                );
-                            })}
+                        <div className="flex gap-8">
+                            <a
+                                href="https://www.vk.com"
+                                className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
+                            >
+                                О Дворце
+                            </a>
+                            <a
+                                href="https://www.vk.com"
+                                className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
+                            >
+                                Афиша
+                            </a>
+                            <a
+                                href="https://www.vk.com"
+                                className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
+                            >
+                                Услуги
+                            </a>
+                            <a
+                                href="https://www.vk.com"
+                                className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
+                            >
+                                Билеты
+                            </a>
+                            <a
+                                href="https://www.vk.com"
+                                className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
+                            >
+                                Президентский оркестр
+                            </a>
+                            <a
+                                href="https://www.vk.com"
+                                className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
+                            >
+                                Галерея
+                            </a>
+                            <a
+                                href="https://www.vk.com"
+                                className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
+                            >
+                                Новости
+                            </a>
+                            <a
+                                href="https://www.vk.com"
+                                className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
+                            >
+                                Контакты
+                            </a>
                         </div>
                     </div>
-                    <div className="flex gap-8">
-                        <a
-                            href="https://www.vk.com"
-                            className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
+                    {/* Для мобилки */}
+                    <div className="flex gap-3 lg:hidden z-50">
+                        <div className="flex flex-row justify-center ml-2">
+                            <button
+                                type="button"
+                                className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+                                onClick={() => {
+                                    window.scrollTo({ top: 0 });
+                                    setSearchMenuOpen(true);
+                                }}
+                            >
+                                <span className="sr-only">Open search</span>
+                                <MagnifyingGlassIcon
+                                    className="h-6 w-6 text-[#2F2F38] dark:text-white"
+                                    aria-hidden="true"
+                                />
+                            </button>
+                        </div>
+                        <button
+                            type="button"
+                            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+                            onClick={() => {
+                                window.scrollTo({ top: 0 });
+                                setMobileMenuOpen(true);
+                            }}
                         >
-                            О Дворце
-                        </a>
-                        <a
-                            href="https://www.vk.com"
-                            className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
-                        >
-                            Афиша
-                        </a>
-                        <a
-                            href="https://www.vk.com"
-                            className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
-                        >
-                            Услуги
-                        </a>
-                        <a
-                            href="https://www.vk.com"
-                            className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
-                        >
-                            Билеты
-                        </a>
-                        <a
-                            href="https://www.vk.com"
-                            className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
-                        >
-                            Президентский оркестр
-                        </a>
-                        <a
-                            href="https://www.vk.com"
-                            className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
-                        >
-                            Галерея
-                        </a>
-                        <a
-                            href="https://www.vk.com"
-                            className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
-                        >
-                            Новости
-                        </a>
-                        <a
-                            href="https://www.vk.com"
-                            className="uppercase font-thin transition-colors duration-300 hover:text-[#006D56]"
-                        >
-                            Контакты
-                        </a>
+                            <span className="sr-only">Open main menu</span>
+                            <svg
+                                className="h-4 w-6 text-[#2F2F38] dark:text-white"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 16 16"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <g clipPath="url(#clip0_721_30841)">
+                                    <path
+                                        d="M0 1H16M0 8H8M0 15H16"
+                                        stroke="currentColor"
+                                        strokeOpacity="0.85"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                    />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_721_30841">
+                                        <rect width="16" height="16" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+
+                            {/* <Bars3Icon className="h-6 w-6" aria-hidden="true" /> */}
+                        </button>
                     </div>
                 </div>
             </nav>
-            {/* <Transition show={isMobileMenuOpen} appear as={Fragment}>
+            <Transition show={isMobileMenuOpen} appear as={Fragment}>
                 <Dialog as="div" className="lg:hidden" onClose={() => setMobileMenuOpen(false)}>
                     <Transition.Child
                         as={Fragment}
@@ -207,50 +302,8 @@ const Header = ({ langs, selectedLang }: HeaderProps) => {
                                         ))}
                                     </div>
                                 </div>
-                                <Popover className="relative">
-                                    <Popover.Button className="flex items-center gap-x-1 text-base font-medium leading-6 text-gray-900 dark:text-white">
-                                        <MapPinIcon className="h-5 w-5" />
-                                        {isEmpty(selectedCity) ? locale?.Header?.City : selectedCity?.name}
-                                        <ChevronDownIcon
-                                            className="h-5 w-5 flex-none text-gray-400"
-                                            aria-hidden="true"
-                                        />
-                                    </Popover.Button>
-
-                                    <Transition
-                                        enter="transition ease-out duration-200"
-                                        enterFrom="opacity-0 translate-y-1"
-                                        enterTo="opacity-100 translate-y-0"
-                                        leave="transition ease-in duration-150"
-                                        leaveFrom="opacity-100 translate-y-0"
-                                        leaveTo="opacity-0 translate-y-1"
-                                    >
-                                        <Popover.Panel className="absolute z-50 -right-8 top-full mt-3 w-screen max-w-xs max-h-96 overflow-auto rounded-2xl bg-white shadow-lg ring-1 ring-gray-900/5">
-                                            <div className="p-2">
-                                                {cities.map((city: City) => (
-                                                    <div
-                                                        key={city.id}
-                                                        onClick={() => handleSelectCity(city)}
-                                                        className={`group cursor-pointer relative flex items-center gap-x-6 rounded-lg p-3 text-sm leading-6 hover:bg-gray-50 ${
-                                                            city.id === selectedCity?.id
-                                                                ? 'bg-[#F5F5F5] text-[#0490C3]'
-                                                                : ''
-                                                        }`}
-                                                    >
-                                                        <div className="flex-auto">
-                                                            <div className="block">
-                                                                {city.name}
-                                                                <span className="absolute z-50 inset-0" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </Popover.Panel>
-                                    </Transition>
-                                </Popover>
                                 <div className="flex flex-col gap-4">
-                                    <span className="text-lg font-medium dark:text-white">KAZTICKET.KZ</span>
+                                    <span className="text-lg font-medium dark:text-white">BOXCENTER.KZ</span>
                                     <nav className="flex flex-col justify-start gap-3">
                                         {pages.map((x) => {
                                             return (
@@ -278,7 +331,7 @@ const Header = ({ langs, selectedLang }: HeaderProps) => {
                                 </div>
                                 <div className="flex gap-5">
                                     <Link
-                                        className="text-black hover:text-[#006D56] dark:text-white"
+                                        className="text-black hover:text-gray-500 dark:text-white"
                                         href="https://t.me/kazticketkz"
                                         target="_blank"
                                     >
@@ -307,7 +360,7 @@ const Header = ({ langs, selectedLang }: HeaderProps) => {
                                         </svg>
                                     </Link>
                                     <Link
-                                        className="text-black hover:text-[#006D56] dark:text-white"
+                                        className="text-black hover:text-gray-500 dark:text-white"
                                         href="https://www.instagram.com/kazticket.kz"
                                         target="_blank"
                                     >
@@ -326,7 +379,7 @@ const Header = ({ langs, selectedLang }: HeaderProps) => {
                                         </svg>
                                     </Link>
                                     <Link
-                                        className="text-black hover:text-[#006D56] dark:text-white"
+                                        className="text-black hover:text-gray-500 dark:text-white"
                                         href="https://www.tiktok.com/@kazticket.kz"
                                         target="_blank"
                                     >
@@ -345,7 +398,7 @@ const Header = ({ langs, selectedLang }: HeaderProps) => {
                                         </svg>
                                     </Link>
                                     <Link
-                                        className="text-black hover:text-[#006D56] dark:text-white"
+                                        className="text-black hover:text-gray-500 dark:text-white"
                                         href="https://www.linkedin.com/company/kazticket-kz"
                                         target="_blank"
                                     >
@@ -360,7 +413,7 @@ const Header = ({ langs, selectedLang }: HeaderProps) => {
                                         </svg>
                                     </Link>
                                     <Link
-                                        className="text-black hover:text-[#006D56] dark:text-white"
+                                        className="text-black hover:text-gray-500 dark:text-white"
                                         href="https://vk.com/kazticketkzz"
                                         target="_blank"
                                     >
@@ -374,14 +427,6 @@ const Header = ({ langs, selectedLang }: HeaderProps) => {
                                         </svg>
                                     </Link>
                                 </div>
-                                <button
-                                    className="text-base font-semibold leading-6 text-gray-900 dark:text-white flex gap-x-2 items-center"
-                                    onClick={() => swithTheme()}
-                                >
-                                    <SunIcon className="hidden dark:block h-7 w-7" />
-                                    <MoonIcon className="dark:hidden h-7 w-7" />
-                                    {locale?.Header?.SwithTheme}
-                                </button>
                                 <button className="rounded-xl flex items-center justify-center w-full bg-[#0490C3] py-3">
                                     <span className="text-white text-lg">Войти</span>
                                 </button>
@@ -417,78 +462,6 @@ const Header = ({ langs, selectedLang }: HeaderProps) => {
                     </Transition.Child>
                 </Dialog>
             </Transition>
-            <Transition show={isSupportMenuOpen} appear as={Fragment}>
-                <Dialog as="div" className="lg:hidden" onClose={() => setSupportMenuOpen(false)}>
-                    <Transition.Child
-                        as={Fragment}
-                        enter="transform transition ease-in-out duration-500 sm:duration-700"
-                        enterFrom="translate-x-full"
-                        enterTo="translate-x-0"
-                        leave="transform transition ease-in-out duration-500 sm:duration-700"
-                        leaveFrom="translate-x-0"
-                        leaveTo="translate-x-full"
-                    >
-                        <Dialog.Panel className="top-0 fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white dark:bg-black px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-                            <div className="flex flex-col w-full gap-5">
-                                <div className="flex flex-row w-full">
-                                    <button
-                                        type="button"
-                                        className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 dark:text-white"
-                                        onClick={() => setSupportMenuOpen(false)}
-                                    >
-                                        <span className="sr-only">Open main menu</span>
-                                        <svg
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                d="M13.9998 6L8.70696 11.2929C8.31643 11.6834 8.31643 12.3166 8.70696 12.7071L13.9998 18"
-                                                stroke="currentColor"
-                                                strokeWidth="2"
-                                                strokeLinecap="round"
-                                            />
-                                        </svg>
-                                    </button>
-                                    <div className="flex w-full -ml-2.5">
-                                        <span className="text-center w-full font-medium text-gray-700 dark:text-white">
-                                            Служба поддержки
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="flex flex-col w-full gap-2">
-                                    <Link
-                                        className="text-base leading-6 text-[#0490C3] dark:text-white flex gap-x-2 items-center"
-                                        href="tel:+7-708-08-08-999"
-                                        target="_blank"
-                                    >
-                                        <span>+7-708-08-08-999</span>
-                                    </Link>
-                                    <Link
-                                        className="text-base leading-6 text-[#0490C3] dark:text-white flex gap-x-2 items-center"
-                                        href="https://wa.me/77080808999"
-                                        target="_blank"
-                                    >
-                                        <span>WhatsApp</span>
-                                    </Link>
-                                    <div className="flex gap-1">
-                                        <span className="text-black dark:text-white">Почта: </span>
-                                        <Link
-                                            className="text-base leading-6 text-[#0490C3] dark:text-white flex gap-x-2 items-center"
-                                            href="mailto:support@kazticket.kz"
-                                            target="_blank"
-                                        >
-                                            <span>support@kazticket.kz</span>
-                                        </Link>
-                                    </div>
-                                </div>
-                            </div>
-                        </Dialog.Panel>
-                    </Transition.Child>
-                </Dialog>
-            </Transition> */}
             {/* <PushNotificationRequest /> */}
         </header>
     );

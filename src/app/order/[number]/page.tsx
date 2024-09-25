@@ -61,11 +61,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const data = await GetOrderData(orderNumber);
     if (isEmpty(data)) {
         return {
-            title: `Билет - Kazticket.kz`,
+            title: `Билет - Boxcenter.kz`,
         };
     }
     return {
-        title: `Билеты ${data?.details?.eventName} - Kazticket.kz`,
+        title: `Билеты ${data?.details?.eventName} - Boxcenter.kz`,
     };
 }
 

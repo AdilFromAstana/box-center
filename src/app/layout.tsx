@@ -13,8 +13,8 @@ const rubik = Rubik({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
     metadataBase: new URL('https://kazticket.kz'),
-    title: `Kazticket.kz - Билеты на концерты и мероприятия онлайн: Покупайте билеты с уверенностью`,
-    description: `Kazticket.kz - Система онлайн покупки билетов. Купить билеты, концерт, мероприятия`,
+    title: `Boxcenter.kz - Билеты на концерты и мероприятия онлайн: Покупайте билеты с уверенностью`,
+    description: `Boxcenter.kz - Система онлайн покупки билетов. Купить билеты, концерт, мероприятия`,
     alternates: {
         canonical: '/',
     },
