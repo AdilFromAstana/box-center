@@ -8,11 +8,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Fragment, useEffect, useState } from 'react';
 
-import WhiteMonoLogo from '@/assets/kazticket-logo-white-mono.svg';
-import Logo from '@/assets/kazticket-logo.svg';
 import { isEmpty } from '@/functions';
 import { City } from '@/types/City';
 import { Dropdown } from '@/types/Dropdown';
+import logo from '../assets/logo.png';
 
 interface HeaderProps {
     cities: City[];
@@ -25,7 +24,6 @@ interface HeaderProps {
 
 const Header = ({ langs, selectedLang }: HeaderProps) => {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
-    const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -36,19 +34,6 @@ const Header = ({ langs, selectedLang }: HeaderProps) => {
             });
         }
     }, []);
-
-    useEffect(() => {
-        if (
-            getCookie('theme') === 'dark' ||
-            (isEmpty(getCookie('theme')) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-        ) {
-            setIsDarkMode(true);
-            document.documentElement.classList.add('dark');
-        } else {
-            setIsDarkMode(false);
-            document.documentElement.classList.remove('dark');
-        }
-    }, [!isDarkMode]);
 
     const handleSelectLang = (lang: Dropdown) => {
         if (selectedLang?.key !== lang.key) {
@@ -71,7 +56,7 @@ const Header = ({ langs, selectedLang }: HeaderProps) => {
                         onClick={() => {
                             router.push('/');
                         }}
-                        src={isDarkMode ? WhiteMonoLogo : Logo}
+                        src={logo}
                         alt="Kazticket.kz Logo"
                         className="lg:h-8 h-6 w-auto cursor-pointer"
                         priority
