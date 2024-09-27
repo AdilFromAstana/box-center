@@ -23,10 +23,8 @@ interface HeaderProps {
     pages: any[];
 }
 
-const Header = ({ locale, selectedCity, cities, langs, selectedLang, pages }: HeaderProps) => {
-    const [isSupportMenuOpen, setSupportMenuOpen] = useState<boolean>(false);
+const Header = ({ selectedCity, langs, selectedLang, pages }: HeaderProps) => {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
-    const [isSearchMenuOpen, setSearchMenuOpen] = useState<boolean>(false);
     const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
     const router = useRouter();
 
@@ -51,15 +49,6 @@ const Header = ({ locale, selectedCity, cities, langs, selectedLang, pages }: He
             document.documentElement.classList.remove('dark');
         }
     }, [!isDarkMode]);
-
-    const handleSelectCity = (city: City) => {
-        if (selectedCity?.id !== city.id) {
-            setCookie('UserCityId', city.id, {
-                maxAge: 60 * 60 * 24 * 365,
-            });
-            location.reload();
-        }
-    };
 
     const handleSelectLang = (lang: Dropdown) => {
         if (selectedLang?.key !== lang.key) {
@@ -155,7 +144,6 @@ const Header = ({ locale, selectedCity, cities, langs, selectedLang, pages }: He
                             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
                             onClick={() => {
                                 window.scrollTo({ top: 0 });
-                                setSearchMenuOpen(true);
                             }}
                         >
                             <span className="sr-only">Open search</span>
