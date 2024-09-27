@@ -23,7 +23,7 @@ interface HeaderProps {
     pages: any[];
 }
 
-const Header = ({ selectedCity, langs, selectedLang, pages }: HeaderProps) => {
+const Header = ({ langs, selectedLang }: HeaderProps) => {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
     const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
     const router = useRouter();
