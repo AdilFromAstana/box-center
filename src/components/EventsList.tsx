@@ -1,8 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-
 import dayjs from 'dayjs';
+import { useEffect, useRef, useState } from 'react';
 
 const EventsList: React.FC<any> = ({ events }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -120,7 +119,9 @@ const EventsList: React.FC<any> = ({ events }) => {
                                                 />
                                             </defs>
                                         </svg>
-                                        <span className="font-semibold text-sm">{dayjs(event.beginDate).format('DD.MM.YYYY')}</span>
+                                        <span className="font-semibold text-sm">
+                                            {dayjs(event.beginDate).format('DD.MM.YYYY')}
+                                        </span>
                                     </div>
                                 </div>
                                 <a href={'/event/' + event.code} className="bg-[#006D56] flex justify-center">
