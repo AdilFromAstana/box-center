@@ -2,19 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-import eventPoster1 from '../assets/events/1.png';
-import eventPoster2 from '../assets/events/2.png';
-import eventPoster3 from '../assets/events/3.png';
-import eventPoster4 from '../assets/events/4.png';
+import dayjs from 'dayjs';
 
-const events = [
-    { id: 1, text: 'СЕРГЕЙ ЛАЗАРЕВ', src: eventPoster4, date: '6 октября | 19:00', minAge: 16 },
-    { id: 2, text: 'КОНЦЕРТ АЛЕКСАНДРА ПАНАЙОТОВА', src: eventPoster3, date: '12 октября | 19:00', minAge: 6 },
-    { id: 3, text: 'EMIN', src: eventPoster2, date: '17 ноября | 19:00', minAge: 6 },
-    { id: 4, text: 'КОНЦЕРТ БАЛЕТА АЛЛЫ ДУХОВОЙ TODES', src: eventPoster1, date: '21 ноября | 19:00', minAge: 6 },
-];
-
-const EventsList = () => {
+const EventsList: React.FC<any> = ({ events }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const sliderRef = useRef<HTMLDivElement>(null);
     const [itemsPerPage, setItemsPerPage] = useState(1);
@@ -81,23 +71,23 @@ const EventsList = () => {
 
             <div className="relative overflow-hidden w-full">
                 <div ref={sliderRef} className="flex transition-transform duration-500 ease-in-out">
-                    {events.map((event, index) => (
+                    {events.map((event: any, index: number) => (
                         <div key={index} className="flex-shrink-0 px-2" style={{ width: `${100 / itemsPerPage}%` }}>
                             <div className="flex flex-col justify-between h-full">
                                 <div className="relative flex flex-col justify-between">
                                     <div className="aspect-[9/16]">
                                         <img
-                                            alt={event.text}
-                                            src={event.src.src}
+                                            alt={event.name}
+                                            src={event.previewFileUrl}
                                             className="w-full h-full object-cover shadow-lg cursor-pointer"
                                         />
                                     </div>
                                     <div className="absolute top-0 right-0 w-8 h-8 bg-gray-600 flex items-center justify-center text-white">
-                                        {event.minAge}+
+                                        {event.ageLimit}+
                                     </div>
                                 </div>
                                 <div className="py-2 h-full flex flex-col items-center justify-between">
-                                    <div className="text-center text-sm text-[#006D56]">{event.text}</div>
+                                    <div className="text-center text-sm text-[#006D56]">{event.name}</div>
                                     <div className="flex items-center flex-row gap-4">
                                         <svg
                                             width="20"
@@ -130,10 +120,10 @@ const EventsList = () => {
                                                 />
                                             </defs>
                                         </svg>
-                                        <span className="font-semibold text-sm">{event.date}</span>
+                                        <span className="font-semibold text-sm">{dayjs(event.beginDate).format('DD.MM.YYYY')}</span>
                                     </div>
                                 </div>
-                                <a href={'/e/' + event.id} className="bg-[#006D56] flex justify-center">
+                                <a href={'/event/' + event.code} className="bg-[#006D56] flex justify-center">
                                     <button className="text-white">Купить билет</button>
                                 </a>
                             </div>

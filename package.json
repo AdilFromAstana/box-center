@@ -13,7 +13,7 @@
     "node": ">=18.18.2"
   },
   "scripts": {
-    "dev": "next",
+    "dev": "copy .env.development .env.local && next dev",
     "build:dev": "cp .env.development .env.local && next build",
     "build:prod": "cp .env.production .env.local && next build",
     "start": "next start",
